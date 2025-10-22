@@ -11,7 +11,7 @@ import Login from './components/Login.jsx'
 
 
 export default function App() {
-const [message, setMessage] = useState('');
+  const [message, setMessage] = useState('');
   useEffect(() => {
     fetch("http://localhost:5000")
       .then((res) => res.text()) // Get the response as text
@@ -21,18 +21,22 @@ const [message, setMessage] = useState('');
 
   return (
     <Router>
-      <div>
+      <div className="bg-gray-100 min-h-screen text-black-700">
         <Head />
-<p>{message}</p>
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path='/tickets' element={<TicketList />} />
-          <Route path='/tickets/:ticketId' element={<TicketDetail />} />
-          <Route path='/new' element={<TicketForm />} />
-          <Route path="*" element={<h2>Page Not Found</h2>} />
-        </Routes>
+
+        <div clssName="pt-20 px-6">
+          <h1 className="text-3xl font-bold text-balck-700 mb-4">Welcome to IT Service Tracker</h1>
+
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path='/tickets' element={<TicketList />} />
+            <Route path='/tickets/:ticketId' element={<TicketDetail />} />
+            <Route path='/new' element={<TicketForm />} />
+            <Route path="*" element={<h2>Page Not Found</h2>} />
+          </Routes>
+        </div>
       </div>
     </Router>
   );

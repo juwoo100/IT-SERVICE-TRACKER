@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { createTicket } from '../api/ticketApi.js';
 
 export default function TicketForm() {
     const { register, handleSubmit, setValue } = useForm({
         defaultValues: {
-            userName: '',
+            username: '',
             title: '',
             description: '',
             status: 'open',
@@ -15,14 +16,14 @@ export default function TicketForm() {
 
     useEffect(() => {
         let data = {
-            userName: 'default user',
+            username: 'default user',
             title: 'default title',
             description: 'default description',
             status: 'open',
             reportTo: 'admin'
         }
-        const loggedUser = localStorage.getItem('userName') || 'Guest';
-        setValue('userName', loggedUser);
+        const loggedUser = localStorage.getItem('username') || 'Guest';
+        setValue('username', loggedUser);
         for (const prop in data) {
             setValue(prop, data[prop]);
         }
@@ -38,7 +39,7 @@ export default function TicketForm() {
         <div>
             <h2>Create new ticket</h2>
             <form onSubmit={handleSubmit(submitForm)}>
-                <p>Welcome, <b>{localStorage.getItem('userName')}</b>!</p>
+                <p>Welcome, <b>{localStorage.getItem('username')}</b>!</p>
 
                 <label>
                     Title:
