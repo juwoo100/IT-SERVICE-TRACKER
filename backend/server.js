@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import ticketRoutes from './routes/ticketRoutes.js';
-import connectDB from './config/db.js';
+import connectDB from './db.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
