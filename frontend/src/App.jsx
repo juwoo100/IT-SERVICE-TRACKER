@@ -24,7 +24,7 @@ export default function App() {
       <div className="bg-gray-100 min-h-screen text-black-700">
         <Head />
 
-        <div clssName="pt-20 px-6">
+        <div className="pt-20 px-6">
           <h1 className="text-3xl font-bold text-balck-700 mb-4">Welcome to IT Service Tracker</h1>
 
           <Routes>

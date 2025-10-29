@@ -1,26 +1,20 @@
-export default function TicketCard({tickets }) {
+import { Link } from 'react-router-dom';
+
+export default function TicketCard({ ticket }) {
     return (
-        <div className="ticket-card border rounded-lg p-4 shadow-md mb-4">
-            <table className="min-w-full table-auto">
-                <thead className="bg-gray-200">
-                    <tr>
-                        <th>Ticket</th>
-                        <th>Status</th>
-                        <th>Description</th>
-                        <th>Category</th>
-                        <th>Create Date</th>
-                        <th>Report To</th>
-                    </tr>
-                </thead>
-                <tbody className="bg-white">
-                    <tr>{tickets.title}</tr>
-                    <tr>{tickets.status || "open"}</tr>
-                    <tr>{tickets.description}</tr>
-                    <tr>{tickets.caategory || "general"}</tr>
-                    <tr>{tickets.createDate || new Date().toLocaleDateString}</tr>
-                    <tr>{tickets.reportTo || "admin"}</tr>
-                </tbody>
-            </table>
+        <div className="border rounded-lg p-4 shadow-sm hover:shadow-md transition mb-3">
+            <h3 className="text-xl font-semibold">{ticket.title}</h3>
+            <p className="text-gray-600">{ticket.description}</p>
+
+            <div className="flex flex-wrap justify-between mt-2 text-sm text-gray-500">
+                <span>Status: {ticket.status || 'open'}</span>
+                <span>Category: {ticket.category || 'general'}</span>
+                <span>Create Date: {' '} {ticket.createDate ? new Date(ticket.createDate).toLocaleDateString() : new Date().toLocaleDateString()}</span>
+                <span>Report to: {ticket.reportTo || 'admin'}</span>
+            </div>
+
+            <Link to={`/tickets/${ticket._id}`} className="inline-block mt-3 text-blue-600 hover:underline">
+                View Details</Link>
         </div>
     );
 }

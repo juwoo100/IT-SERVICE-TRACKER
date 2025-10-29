@@ -1,10 +1,12 @@
 const API_BASE_URL = 'http://localhost:5000';
+
+
 export async function getTickets() {
     const res = await fetch(`${API_BASE_URL}/tickets`);
     if (!res.ok) {
         throw new Error('Failed to fetch tickets');
     }
-    const data = await res.json();
+    const data = await res.json(); // [ {title: ..., description: ...}, ... ]
     return data;
 }
 

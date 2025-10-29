@@ -6,12 +6,18 @@ export default function Dashboard() {
     const [tickets, setTickets] = useState([]);
     useEffect(() => {
         getTickets()
-            .then((data) => setTickets(data.tickets));
+            .then((data) => {
+      console.log("📦 getTickets() response:", data);
+      console.log("📦 typeof data:", typeof data);
+      console.log("📦 Array.isArray(data):", Array.isArray(data));
+      setTickets(data);
+    })
+            .catch(console.error);
     }, []);
     
     return (
-        <div>
-            <h2>Dashboard</h2>
+        <div className="max-w-4xl mx-auto p-6">
+            <h2 className="text-2xl font-bold mb-6 text-center">Dashboard</h2>
             <TicketList tickets={tickets} />
         </div>
     );

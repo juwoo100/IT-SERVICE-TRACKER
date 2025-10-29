@@ -49,8 +49,8 @@ export default function Login() {
         );
     } else {
         return (
-            <div className='container'>
-                <div className='header'>
+            <div className='flex bg-yellow-300 rounded-md'> 
+                            <div className='max-w-30'>
                     <div className='text'>Login</div>
                 </div>
                 <br />
