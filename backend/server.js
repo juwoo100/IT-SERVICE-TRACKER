@@ -11,10 +11,10 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
+app.use('/tickets', ticketRoutes);
 app.get('/', (req, res) => {
     res.json("Backend server is running");
 });
-ticketRoutes(app); // call router function to set up routes
 
 app.use((req, res) => {
     res.status(404).send('Resource not found');
