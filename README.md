@@ -7,7 +7,7 @@ This dashboard provides a quick overview of ticket metrics, priority ratios, and
 
 ## 🎨 Preview
 
-![Dashboard Preview](https://github.com/juwoo100/IT-SERVICE-TRACKER/blob/main/public/dashboard-overview.png)
+![Dashboard Preview](https://github.com/juwoo100/IT-SERVICE-TRACKER/blob/main/frontend/src/public/dashboard-overview.png)
 
 [View in Figma →](https://www.figma.com/design/wbhtKa1CE4LdKbUvQ1bn84/IT-service-tracker?node-id=1-2&t=8qVH5zVfrsvvIPj3-0)
 
