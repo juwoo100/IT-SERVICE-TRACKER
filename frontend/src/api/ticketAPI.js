@@ -1,54 +1,40 @@
-const API_BASE_URL = 'http://localhost:5000';
+// frontend/src/api/ticketAPI.js
 
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 
-export async function getTickets() {
-    const res = await fetch(`${API_BASE_URL}/tickets`);
-    if (!res.ok) {
-        throw new Error('Failed to fetch tickets');
-    }
-    const data = await res.json(); // [ {title: ..., description: ...}, ... ]
-    return data;
+async function request(path, options = {}) {
+  const res = await fetch(`${API_BASE_URL}${path}`, {
+    headers: { "Content-Type": "application/json" },
+    ...options,
+  });
+
+  const data = await res.json().catch(() => null); // Handle cases where response is not JSON
+  if (!res.ok) {
+    throw new Error(
+      data?.message || `API request failed with status ${res.status}`,
+    );
+  }
+  return data;
 }
 
-export async function getTicketById(ticketId) {
-    const res = await fetch(`${API_BASE_URL}/tickets/${ticketId}`);
-    if (!res.ok) {
-        throw new Error(`Failed to fetch ticket with id: ${ticketId}`);
-    }
-    const data = await res.json();
-    return data;
-}
+export const getTickets = () => request("/tickets");
 
-export async function createTicket(ticketData) {
-    const res = await fetch(`${API_BASE_URL}/tickets`, {
-        method: 'POST',
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(ticketData),
-    });
-    if (!res.ok) {
-        throw new Error('Failed to create ticket');
-    }
-    return res.json();
-}
+export const getTicketById = (ticketId) => request(`/tickets/${ticketId}`);
 
-export async function updateTicket(ticketId, updateData) {
-    const res = await fetch(`${API_BASE_URL}/tickets/${ticketId}`, {
-        method: 'PUT',
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updateData),
-    });
-    if (!res.ok) {
-        throw new Error(`Failed to update ticket by Id: ${ticketId}`);
-    }
-    return res.json();
-}
+export const createTicket = (ticketData) =>
+  request("/tickets", {
+    method: "POST",
+    body: JSON.stringify(ticketData),
+  });
 
-export async function deleteTicket(ticketId) {
-    const res = await fetch(`${API_BASE_URL}/tickets/${ticketId}`, {
-        method: 'DELETE',
-    });
-    if (!res.ok) {
-        throw new Error(`Failed to delete ticket by Id: ${ticketId}`);
-    }
-    return res.json();
-}
+export const updateTicket = (ticketId, updateData) =>
+  request(`/tickets/${ticketId}`, {
+    method: "PUT",
+    body: JSON.stringify(updateData),
+  });
+
+export const deleteTicket = (ticketId) =>
+  request(`/tickets/${ticketId}`, {
+    method: "DELETE",
+  });
