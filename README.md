@@ -1,19 +1,39 @@
-# IT Service Tracker
+# 🧾 IT Service Tracker Dashboard
 
-한두 문장 프로젝트 소개 + 대시보드 스크린샷
+A **UI/UX concept** for the IT Service Tracker web application built in Figma.  
+This dashboard provides a quick overview of ticket metrics, priority ratios, and recent activity logs.
 
-## Features
+---
 
-## Tech Stack
+## 🎨 Preview
 
-## Project Structure
+![Dashboard Preview](https://github.com/juwoo100/IT-SERVICE-TRACKER/blob/main/frontend/src/public/dashboard-overview.png)
 
-## Getting Started
+[View in Figma →](https://www.figma.com/design/wbhtKa1CE4LdKbUvQ1bn84/IT-service-tracker?node-id=1-2&t=8qVH5zVfrsvvIPj3-0)
 
-- Prerequisites (Node 버전, MongoDB Atlas 계정)
-- Environment variables
-- Run the backend / Run the frontend
+---
 
-## API Endpoints
+## 🧩 Features Displayed
 
-## Future Improvements
+| Section   | Description                                          |
+| --------- | ---------------------------------------------------- |
+| KPI Cards | Show total, open, in-progress, and closed tickets    |
+| Charts    | Visualize daily ticket trends and priority ratios    |
+| Table     | Recent tickets with status, priority, and assignee   |
+| Sidebar   | Navigation to Dashboard / Add Ticket / Login Sign up |
+
+---
+
+## 🛠️ Tools Used
+
+- **Figma** – Dashboard layout & component design
+- **React + Node + MongoDB** – Backend integration concept
+- **TailwindCSS** – Styling framework for implementation
+
+---
+
+## 💡 Design Notes
+
+- Used Auto Layout & Components for reusability
+- Color palette: `#FFBF00` (Amber), `#F2F0EF` (Background)
+- Font: **Inter** (16px base)
