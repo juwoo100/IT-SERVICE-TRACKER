@@ -1,6 +1,5 @@
 // frontend/src/components/Head.jsx
 import { Link } from "react-router-dom";
-import { isSignup } from "../Login.jsx";
 
 export default function Head() {
   return (
@@ -15,7 +14,7 @@ export default function Head() {
             Add Ticket
           </Link>
           <Link to="/login" className="hover:text-amber-600 transition">
-            {isSignup ? "Sign up" : "Login"}
+            Login
           </Link>
         </div>
       </nav>
