@@ -7,7 +7,6 @@ import mongoose from "mongoose";
 const router = express.Router();
 
 const CREATE_FIELDS = [
-  "username",
   "title",
   "description",
   "status",
@@ -61,7 +60,11 @@ router.get("/", async (req, res) => {
 // CREATE
 router.post("/", async (req, res) => {
   try {
-    const ticket = await Ticket.create(pickFields(req.body, CREATE_FIELDS));
+    const ticket = await Ticket.create({
+      ...pickFields(req.body, CREATE_FIELDS),
+      username: req.user.username, // Token user
+      createdBy: req.user._id,
+    });
     res.status(201).json({ message: "Ticket created", ticket });
   } catch (err) {
     handleError(err, res);

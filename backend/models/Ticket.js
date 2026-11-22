@@ -33,6 +33,11 @@ const ticketSchema = new mongoose.Schema(
       required: true,
       enum: ["admin", "support"],
     },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
   },
   { timestamps: true },
 );

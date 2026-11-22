@@ -15,7 +15,7 @@ export default async function requireAuth(req, res, next) {
   let payload;
   try {
     // Error if token is expired or invalid
-    payload = jwt.verify(token, process.env.User_SECRET);
+    payload = jwt.verify(token, process.env.JWT_SECRET);
   } catch (err) {
     return res.status(401).json({ message: "Invalid or expired token" });
   }

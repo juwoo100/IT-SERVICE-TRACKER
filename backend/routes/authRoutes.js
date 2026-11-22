@@ -2,15 +2,15 @@
 
 import express from "express";
 import jwt from "jsonwebtoken";
-import User from "../models/User";
-import requireAuth from "../middleware/requireAuth";
+import User from "../models/User.js";
+import requireAuth from "../middleware/requireAuth.js";
 
 const router = express.Router();
 
 // Put user id to token and sign
 function signToken(user) {
   return jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN || "id",
+    expiresIn: process.env.JWT_EXPIRES_IN || "1d",
   });
 }
 
@@ -41,8 +41,25 @@ router.post("/login", async (req, res) => {
     return res.status(400).json({ message: "Email and password are required" });
   }
   try {
-    const user = await User.fineOne({
+    // wrap with String() to prevent NoSQL like { "$gt": "" }
+    // select('+password'): Bring password that model hid
+    const user = await User.findOne({
       email: String(email).toLowerCase(),
     }).select("+password");
-  } catch (err) {}
+    // Same message whether there's no email or password's wrong -> It doesn't say which is wrong
+    if (!user || !(await user.comparePassword(String(password)))) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+    res.json({ token: signToken(user), user });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
 });
+
+// GET /auth/me -> check user that logged in currently with token (fresh screen in frontend)
+router.get("/me", requireAuth, (req, res) => {
+  res.json({ user: req.user });
+});
+
+export default router;
