@@ -95,7 +95,7 @@ router.put("/:ticketId", async (req, res) => {
       req.params.ticketId,
       updates,
       {
-        new: true,
+        returnDocument: "after",
         runValidators: true,
       },
     );

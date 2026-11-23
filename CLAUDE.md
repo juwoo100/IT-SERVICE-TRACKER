@@ -13,19 +13,23 @@ Backend (`cd backend`):
 - `npm run dev` — run with `node --watch` (auto-restart)
 - `npm start` — run once
 - Requires `backend/.env` (copy `.env.example`): `MONGO_URI`, `PORT` (default 5000), `JWT_SECRET` (server exits on startup if missing), `JWT_EXPIRES_IN` (default `1d`).
+- `npm test` — Jest + supertest against an in-memory MongoDB (`mongodb-memory-server`); no `.env` or real DB needed. Jest runs in native ESM mode via `--experimental-vm-modules`.
+  - Single file: `npm test -- tests/tickets.test.js`
+  - Single test by name: `npm test -- -t "returns 404"`
+  - `tests/setupEnv.js` sets test-only `JWT_SECRET`/`JWT_EXPIRES_IN`; `tests/setupDb.js` starts a fresh mongod per test file and wipes all collections after each test; `tests/helpers.js` has `registerUser()`, `auth(token)` and a `validTicket` fixture.
 
 Frontend (`cd frontend`):
 
 - `npm run dev` — Vite dev server
 - `npm run build` / `npm run preview`
 - `npm run lint` — ESLint (flat config in `eslint.config.js`)
-- API base URL is read from `import.meta.env.VITE_API_BASE_URL` (falls back to `http://localhost:5000`). Note `frontend/.env.example` currently lists `VITE_API_URL`, which the code does not read.
+- API base URL is read from `import.meta.env.VITE_API_BASE_URL` (falls back to `http://localhost:5000`).
 
-There is no test suite in either package.
+The frontend has no test suite.
 
 ## Architecture
 
-**Backend request flow** (`backend/server.js`): `cors()` → `express.json()` → routes → 404 handler → error handler (maps JSON parse failures to 400, else 500). The server only starts listening after `connectDB()` (`db.js`) succeeds.
+**Backend request flow** (`backend/app.js`): `cors()` → `express.json()` → routes → 404 handler → error handler (maps JSON parse failures to 400, else 500). `app.js` only builds and exports the app (tests import it directly); `server.js` loads `.env`, checks `JWT_SECRET`, and calls `app.listen()` only after `connectDB()` (`db.js`) succeeds.
 
 - `/auth` (`routes/authRoutes.js`): `POST /register`, `POST /login` return `{ token, user }`; `GET /me` returns the current user. JWT payload is `{ id }`.
 - `/tickets` (`routes/ticketRoutes.js`) is mounted behind `middleware/requireAuth.js`, which verifies the `Authorization: Bearer <token>` header, loads the user from the DB, and sets `req.user`.
